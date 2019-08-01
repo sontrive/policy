@@ -29,9 +29,9 @@ public class GeneratePDFReport {
 
 		try {
 
-			PdfPTable table = new PdfPTable(6);
-			table.setWidthPercentage(60);
-			table.setWidths(new int[] { 3, 3, 3, 3, 3, 3});
+			PdfPTable table = new PdfPTable(7);
+			table.setWidthPercentage(100);
+			table.setWidths(new int[] { 3, 3, 3, 3, 3, 3, 3});
 
 			Font headFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
 
@@ -61,6 +61,9 @@ public class GeneratePDFReport {
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			table.addCell(hcell);
 			
+			hcell = new PdfPCell(new Phrase("Policy Opted Date", headFont));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			table.addCell(hcell);
 			
 
 			for (UserPolicyDetails policy : policies) {
@@ -101,7 +104,11 @@ public class GeneratePDFReport {
 				cell.setPaddingRight(5);
 				table.addCell(cell);
 				
-				
+				cell = new PdfPCell(new Phrase(String.valueOf(policy.getOptedDate())));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(5);
+				table.addCell(cell);
 
 			}
 

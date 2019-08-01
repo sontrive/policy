@@ -16,6 +16,10 @@ import com.hcl.policy.dto.ResponseDTO;
 import com.hcl.policy.exception.ApplicationException;
 import com.hcl.policy.service.TrendAnalysisService;
 
+/**
+ * @author Administrator
+ *
+ */
 @CrossOrigin
 @RestController
 @RequestMapping("/policies/trend")
@@ -26,6 +30,11 @@ public class TrendAnalysisController {
 	@Autowired
 	TrendAnalysisService trendAnalysisService;
 
+	/**
+	 * @param criteria
+	 * @return object of ResponseEntity
+	 * @throws ApplicationException
+	 */
 	@GetMapping("")
 	public ResponseEntity<Object> getTrendAnalysis(@RequestParam("criteria") String criteria) throws ApplicationException {
 		

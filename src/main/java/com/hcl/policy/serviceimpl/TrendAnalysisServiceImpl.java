@@ -16,6 +16,10 @@ import com.hcl.policy.exception.ApplicationException;
 import com.hcl.policy.repository.UserPolicyDetailsRepository;
 import com.hcl.policy.service.TrendAnalysisService;
 
+/**
+ * @author Administrator
+ *
+ */
 @Service
 public class TrendAnalysisServiceImpl implements TrendAnalysisService {
 
@@ -24,6 +28,11 @@ public class TrendAnalysisServiceImpl implements TrendAnalysisService {
 	@Autowired
 	UserPolicyDetailsRepository userPolicyDetailsRepository;
 
+	/**
+	 * @param criteria
+	 * @return object of ResponseDTO
+	 * @throws ApplicationException
+	 */
 	public ResponseDTO getPolicyTrendAnalysis(String criteria) throws ApplicationException {
 
 		logger.info("Inside getPolicyTrendAnalysis method in TrendAnalysisServiceImpl");
@@ -51,7 +60,6 @@ public class TrendAnalysisServiceImpl implements TrendAnalysisService {
 			for (List<?> policyTrendAnalysis : policiesTrendList) {
 				totalPoliciesOpted = totalPoliciesOpted + Integer.parseInt(String.valueOf(policyTrendAnalysis.get(1)));
 			}
-			System.out.println(totalPoliciesOpted);
 			if (0 < totalPoliciesOpted) {
 				for (List<?> policyTrendAnalysis : policiesTrendList) {
 					PolicyTrendAnalysisDTO policyTrendAnalysisDTO = new PolicyTrendAnalysisDTO();
@@ -64,15 +72,8 @@ public class TrendAnalysisServiceImpl implements TrendAnalysisService {
 			}
 		}
 		
-		if(!unoptedPolicyList.isEmpty()) {
-			for(Long policyId : unoptedPolicyList) {
-				PolicyTrendAnalysisDTO policyTrendAnalysisDTO = new PolicyTrendAnalysisDTO();
-				policyTrendAnalysisDTO.setPolicyId(policyId);
-				policyTrendAnalysisDTO.setPolicyOptedCount(0L);
-				policyTrendAnalysisDTO.setTrendPercent(0.0f);
-				policiesTrendOutputList.add(policyTrendAnalysisDTO);
-			}
-		}
+		getUnOptedPoliciesList(policiesTrendOutputList, unoptedPolicyList);
+		
 		if(policiesTrendOutputList.isEmpty()) {
 			throw new ApplicationException("Please enter valid analysis criteria.");
 		}
@@ -82,5 +83,18 @@ public class TrendAnalysisServiceImpl implements TrendAnalysisService {
 		responseDTO.setMessage("Policy trend has been generated");
 		return responseDTO;
 
+	}
+	
+	private void getUnOptedPoliciesList(List<PolicyTrendAnalysisDTO> policiesTrendOutputList,List<Long> unoptedPolicyList){
+		
+		if(!unoptedPolicyList.isEmpty()) {
+			for(Long policyId : unoptedPolicyList) {
+				PolicyTrendAnalysisDTO policyTrendAnalysisDTO = new PolicyTrendAnalysisDTO();
+				policyTrendAnalysisDTO.setPolicyId(policyId);
+				policyTrendAnalysisDTO.setPolicyOptedCount(0L);
+				policyTrendAnalysisDTO.setTrendPercent(0.0f);
+				policiesTrendOutputList.add(policyTrendAnalysisDTO);
+			}
+		}
 	}
 }

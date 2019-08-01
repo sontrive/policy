@@ -2,6 +2,10 @@ package com.hcl.policy.dto;
 
 import lombok.Data;
 
+/**
+ * @author Administrator
+ *
+ */
 @Data
 public class PolicyTrendAnalysisDTO {
 

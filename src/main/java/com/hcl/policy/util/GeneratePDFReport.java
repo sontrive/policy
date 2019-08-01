@@ -22,6 +22,9 @@ public class GeneratePDFReport {
 
 	private static final Logger logger = LoggerFactory.getLogger(GeneratePDFReport.class);
 
+	private GeneratePDFReport() {
+		
+	}
 	public static ByteArrayInputStream policyReport(List<UserPolicyDetails> policies) {
 
 		Document document = new Document();

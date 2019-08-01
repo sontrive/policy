@@ -33,7 +33,7 @@ public class UserPolicyServiceImpl implements UserPolicyService {
 	@Autowired
 	UserPolicyDetailsRepository userPolicyDetailsRepository;
 
-	private static final String USER_NOT_ELIGIBLE_ERR_MSG = "User not eligible for policy";
+	private static final String USER_NOT_ELIGIBLE_ERR_MSG = "User is not eligible for policy. ";
 
 	@Override
 	public ResponseDTO optForPolicy(OptPolicyDTO optPolicyDTO) throws ApplicationException {

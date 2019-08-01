@@ -38,9 +38,10 @@ public class PolicyController {
 		if (null == policyId) {
 			throw new ApplicationException("Please enter valid user Id...");
 		} else {
-			logger.debug("Policy Id received is  " + policyId);
+			
+			logger.debug("Policy Id received is {}", policyId); 
 			ResponseDTO policies = policyService.getPolicyDetails(policyId);
-			logger.debug("Policy details are " + policies);
+			logger.debug("Policy details are  {}", policies); 
 			return new ResponseEntity<>(policies, HttpStatus.OK);
 		}
 

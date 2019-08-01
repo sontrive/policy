@@ -9,6 +9,8 @@ import java.time.Period;
 import java.util.Optional;
 
 import org.apache.commons.lang.BooleanUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -19,6 +21,7 @@ import org.springframework.http.HttpStatus;
 
 import org.springframework.stereotype.Service;
 
+import com.hcl.policy.controller.UserPolicyController;
 import com.hcl.policy.dto.OptPolicyDTO;
 import com.hcl.policy.dto.PolicyResponseDTO;
 import com.hcl.policy.dto.ResponseDTO;
@@ -37,6 +40,8 @@ import lombok.var;
 @Service
 public class UserPolicyServiceImpl implements UserPolicyService {
 
+	private static final Logger logger = LoggerFactory.getLogger(UserPolicyController.class);
+	
 	@Autowired
 	PolicyRepository policyRepository;
 
@@ -85,6 +90,10 @@ public class UserPolicyServiceImpl implements UserPolicyService {
 			throw new ApplicationException(
 					USER_NOT_ELIGIBLE_ERR_MSG + "Age should be greater than " + policy.getEntryAge());
 		}
+		
+		if (diff.getYears() < 18) {
+			throw new ApplicationException("If user age is less than 18 then atleast one Nominee should be present.");
+		}
 
 		UserPolicyDetails userPolicyDetails = new UserPolicyDetails();
 		userPolicyDetails.setOptedDate(LocalDate.now());
@@ -99,6 +108,7 @@ public class UserPolicyServiceImpl implements UserPolicyService {
 		responseDTO.setHttpStatus(HttpStatus.OK);
 		responseDTO.setMessage("You have successfully opt for policy. Find below details:");
 		responseDTO.setData(policyResponseDTO);
+		logger.info("Returning response of opt for policy request.");
 		return responseDTO;
 	}
 

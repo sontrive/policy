@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.hcl.policy.entity.Policy;
 import com.hcl.policy.entity.User;
 import com.hcl.policy.entity.UserPolicyDetails;
 
@@ -21,6 +22,8 @@ public interface UserPolicyDetailsRepository extends JpaRepository<UserPolicyDet
 	@Query(value = "SELECT id FROM policy.policy where id  not in (select policy_id policy_count from policy.user_policy_details where DATEDIFF(NOW(), opted_date) <= :analysisDuration group by policy_id);", nativeQuery = true)
 	public List<Long> getAllUnOptedPolicies(Integer analysisDuration);
 
-	List<UserPolicyDetails> findByUserId(User optionalUser);
 
+	List<UserPolicyDetails> findByUserId(User user);
+ 
+	List<UserPolicyDetails> findByUserIdAndPolicyId(User user, Policy policy);
 }

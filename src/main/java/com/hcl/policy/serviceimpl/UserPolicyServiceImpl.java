@@ -40,7 +40,7 @@ public class UserPolicyServiceImpl implements UserPolicyService {
 		ResponseDTO responseDTO = new ResponseDTO();
 
 		if (BooleanUtils.isFalse(optPolicyDTO.getAcceptTermsAndConditions())) {
-			throw new ApplicationException("To opt for policy user should accept the terms.");
+			throw new ApplicationException("To opt for policy user should accept the terms and conditions.");
 		}
 
 		Optional<User> optionalUser = userRepository.findById(optPolicyDTO.getUserId());

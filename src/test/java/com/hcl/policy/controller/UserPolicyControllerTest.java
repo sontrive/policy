@@ -24,14 +24,14 @@ public class UserPolicyControllerTest {
 	@Mock
 	UserPolicyService userPolicyServiceMock;
 	
-	OptPolicyDTO optPolicyDTO = new OptPolicyDTO();
+	OptPolicyDTO optPolicyDTO;
 	@Before
 	public void setUp() {
 		optPolicyDTO = createOptPolicyDTO();
 	}
 	
 	@Test
-	public void testGetAllCoursesIfPoliciesArePresent() throws ApplicationException {
+	public void testOptForPolicy() throws ApplicationException {
 		
 		Mockito.when(userPolicyServiceMock.optForPolicy(optPolicyDTO)).thenReturn(new ResponseDTO());
 		assertNotNull(userPolicyController.optForPolicy(optPolicyDTO));

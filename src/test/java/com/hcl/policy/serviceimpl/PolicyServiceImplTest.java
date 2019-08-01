@@ -1,8 +1,11 @@
 package com.hcl.policy.serviceimpl;
 
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.Before;
@@ -36,6 +39,9 @@ public class PolicyServiceImplTest {
 	
 	@Mock
 	UserPolicyDetailsRepository userPolicyDetailsRepositoryMock;
+	
+	@InjectMocks
+	PolicyServiceImpl policyServiceImpl; 
 
 	OptPolicyDTO optPolicyDTO;
 	User user;
@@ -105,6 +111,25 @@ public class PolicyServiceImplTest {
 		userPolicyDetails.setUserId(createUser());
 		userPolicyDetails.setStatus(1);
 		return userPolicyDetails;
+	}
+	
+	@Test
+	public void testGetAllPoliciesIfPoliciesAreAvailable() {
+		List<Policy> policyList = new ArrayList<>();
+		Policy policy = new Policy();
+		policy.setId(1L);
+		policy.setName("LIC Anand");
+		policy.setPolicyDescription("LIC Jeevan Anand");
+		when(policyRepositoryMock.findAll()).thenReturn(policyList);
+		assertNotNull(policyServiceImpl.getAllPolicies());
+	}
+	
+	@Test
+	public void testGetPolicyDetailsIfIdIsCorrect() {
+		Policy policy = new Policy();
+		policy.setId(1L);
+		Mockito.when(policyRepositoryMock.findById(Mockito.anyLong())).thenReturn(optionalPolicy);
+		assertNotNull(policyServiceImpl.getPolicyDetails(1L));
 	}
 
 }

@@ -45,4 +45,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<>(error, error.getHttpStatus());
 	}
 	
+	@ExceptionHandler(PolicyNotFoundException.class)
+    public final ResponseEntity<Object> handleAllExceptions(PolicyNotFoundException ex, WebRequest request) {
+        ResponseDTO error = new ResponseDTO(ex.getMessage(), HttpStatus.BAD_REQUEST, null);
+        logger.error(ex);
+        return new ResponseEntity<>(error, error.getHttpStatus());
+    }
+	
 }

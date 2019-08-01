@@ -6,4 +6,6 @@ public interface PolicyService {
 	
 	public ResponseDTO getAllPolicies();
 
+	public ResponseDTO getPolicyDetails(Long userId);
+
 }

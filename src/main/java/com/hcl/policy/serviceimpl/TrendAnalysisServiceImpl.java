@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.hcl.policy.controller.PolicyController;
 import com.hcl.policy.dto.PolicyTrendAnalysisDTO;
 import com.hcl.policy.dto.ResponseDTO;
+import com.hcl.policy.exception.ApplicationException;
 import com.hcl.policy.repository.UserPolicyDetailsRepository;
 import com.hcl.policy.service.TrendAnalysisService;
 
@@ -23,7 +24,7 @@ public class TrendAnalysisServiceImpl implements TrendAnalysisService {
 	@Autowired
 	UserPolicyDetailsRepository userPolicyDetailsRepository;
 
-	public ResponseDTO getPolicyTrendAnalysis(String criteria) {
+	public ResponseDTO getPolicyTrendAnalysis(String criteria) throws ApplicationException {
 
 		logger.info("Inside getPolicyTrendAnalysis method in TrendAnalysisServiceImpl");
 		Integer analysisDuration = 0;
@@ -71,6 +72,9 @@ public class TrendAnalysisServiceImpl implements TrendAnalysisService {
 				policyTrendAnalysisDTO.setTrendPercent(0.0f);
 				policiesTrendOutputList.add(policyTrendAnalysisDTO);
 			}
+		}
+		if(policiesTrendOutputList.isEmpty()) {
+			throw new ApplicationException("Please enter valid analysis criteria.");
 		}
 		ResponseDTO responseDTO = new ResponseDTO();
 		responseDTO.setData(policiesTrendOutputList);

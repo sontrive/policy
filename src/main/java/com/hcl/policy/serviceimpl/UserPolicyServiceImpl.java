@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -27,9 +26,7 @@ import com.hcl.policy.repository.PolicyRepository;
 import com.hcl.policy.repository.UserPolicyDetailsRepository;
 import com.hcl.policy.repository.UserRepository;
 import com.hcl.policy.service.UserPolicyService;
-import com.hcl.policy.util.GeneratePDFReport.GeneratePdfReport;
-
-import lombok.var;
+import com.hcl.policy.util.GeneratePDFReport;
 
 @Service
 public class UserPolicyServiceImpl implements UserPolicyService {
@@ -117,12 +114,9 @@ public class UserPolicyServiceImpl implements UserPolicyService {
 			List<UserPolicyDetails> result = userPolicyDetailsRepository.findByUserId(user);
 			
 
-	        ByteArrayInputStream bis = GeneratePdfReport.policyReport(result);
+	        ByteArrayInputStream bis = GeneratePDFReport.policyReport(result);
 
-	        var headers = new HttpHeaders();
-	        headers.add("Content-Disposition", "inline; filename=PolicyReport.pdf");
-
-	        return new InputStreamResource(bis);
+	       return new InputStreamResource(bis);
 			
 		} else {
 			throw new ApplicationException("Invalid User Id");

@@ -13,6 +13,6 @@ import com.hcl.policy.entity.UserPolicyDetails;
 @Repository
 public interface UserPolicyDetailsRepository extends JpaRepository<UserPolicyDetails, Long> {
 
-	List<UserPolicyDetails> findByUserId(Optional<User> optionalUser);
+	List<UserPolicyDetails> findByUserId(User optionalUser);
 
 }

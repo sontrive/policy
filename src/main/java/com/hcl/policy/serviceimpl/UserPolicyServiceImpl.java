@@ -99,7 +99,7 @@ public class UserPolicyServiceImpl implements UserPolicyService {
 
 	@Override
 	public ResponseEntity<InputStreamResource> getPolicyDetails(Long userId) {
-		List<UserPolicyDetails> result = userPolicyDetailsRepository.findAllById(userId);
+		List<UserPolicyDetails> result = userPolicyDetailsRepository.findByUserId(userId);
 		
 			System.out.println("::::::::::::::::::");
 			System.out.println("-->" + result);

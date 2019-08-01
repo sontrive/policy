@@ -42,7 +42,7 @@ public class UserPolicyController {
 		validateRequest(optPolicyDTO);
 		return new ResponseEntity<>(userPolicyService.optForPolicy(optPolicyDTO), HttpStatus.OK);
 	}
-<<<<<<< HEAD
+
 	
 	@GetMapping(value = "/report/{userId}",produces = MediaType.APPLICATION_PDF_VALUE)
 	public ResponseEntity<Object> getPolicyDetails(@PathVariable Long userId) {
@@ -54,11 +54,8 @@ public class UserPolicyController {
 	
 	
 	
-	private void validateRequest(OptPolicyDTO optPolicyDTO) throws ApplicationException{
-=======
-
+	
 	private void validateRequest(OptPolicyDTO optPolicyDTO) throws ApplicationException {
->>>>>>> e080528c67fc19ba9ae560f0ce385b199264b59e
 		if (null != optPolicyDTO.getPolicyId()) {
 			throw new ApplicationException(ERROR_MSG + "Policy Id");
 		}

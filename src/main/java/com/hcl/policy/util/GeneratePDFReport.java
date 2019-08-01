@@ -9,6 +9,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import com.hcl.policy.entity.Policy;
+import com.hcl.policy.entity.UserPolicyDetails;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -24,7 +25,7 @@ public class GeneratePDFReport {
 
 	    private static final Logger logger = LoggerFactory.getLogger(GeneratePdfReport.class);
 
-	    public static ByteArrayInputStream citiesReport(List<Policy> policies) {
+	    public static ByteArrayInputStream policyReport(List<UserPolicyDetails> policies) {
 
 	        Document document = new Document();
 	        ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -64,7 +65,7 @@ public class GeneratePDFReport {
 	            hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 	            table.addCell(hcell);
 	            
-	            for (Policy policy : policies) {
+	            for (UserPolicyDetails policy : policies) {
 
 	                PdfPCell cell;
 
@@ -73,30 +74,30 @@ public class GeneratePDFReport {
 	                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 	                table.addCell(cell);
 
-	                cell = new PdfPCell(new Phrase(policy.getName()));
+	                cell = new PdfPCell(new Phrase(policy.getPolicyId().getName()));
 	                cell.setPaddingLeft(5);
 	                cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	                cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 	                table.addCell(cell);
 
-	                cell = new PdfPCell(new Phrase(String.valueOf(policy.getMaxMaturityAge())));
+	                cell = new PdfPCell(new Phrase(String.valueOf(policy.getPolicyId().getMaxMaturityAge())));
 	                cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 	                cell.setPaddingRight(5);
 	                table.addCell(cell);
 	                
-	                cell = new PdfPCell(new Phrase(policy.getPolicyTerm()));
+	                cell = new PdfPCell(new Phrase(policy.getPolicyId().getPolicyTerm()));
 	                cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 	                table.addCell(cell);
 
-	                cell = new PdfPCell(new Phrase(policy.getMinPremium().toString()));
+	                cell = new PdfPCell(new Phrase(policy.getPolicyId().getMinPremium().toString()));
 	                cell.setPaddingLeft(5);
 	                cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	                cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 	                table.addCell(cell);
 
-	                cell = new PdfPCell(new Phrase(String.valueOf(policy.getMinSumAssured())));
+	                cell = new PdfPCell(new Phrase(String.valueOf(policy.getPolicyId().getMinSumAssured())));
 	                cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 	                cell.setPaddingRight(5);

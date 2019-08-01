@@ -47,7 +47,7 @@ public class PolicyServiceImpl implements PolicyService {
 
 	}
 
-	public ResponseDTO getPolicyDetails(Long policyId) throws PolicyNotFoundException {
+	public ResponseDTO getPolicyDetails(Long policyId){
 
 		logger.info("Inside Service method");
 		Optional<Policy> optPolicy = policyRepository.findById(policyId);

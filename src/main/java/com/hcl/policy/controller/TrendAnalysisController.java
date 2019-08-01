@@ -21,8 +21,6 @@ public class TrendAnalysisController {
 
 	private static final Logger logger = LoggerFactory.getLogger(PolicyController.class);
 
-	private static final String ERROR_MSG = "Mandetory Element missing : ";
-
 	@Autowired
 	TrendAnalysisService trendAnalysisService;
 

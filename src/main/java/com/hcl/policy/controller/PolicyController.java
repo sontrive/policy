@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/policy")
+@RequestMapping("/policies")
 public class PolicyController {
 
 	private static final Logger logger = LoggerFactory.getLogger(PolicyController.class);

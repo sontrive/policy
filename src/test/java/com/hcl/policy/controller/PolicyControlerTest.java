@@ -1,6 +1,7 @@
 package com.hcl.policy.controller;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -41,6 +42,13 @@ public class PolicyControlerTest {
 			policy.setId(1L);
 			policy.setName("LIC Jeevan Saral");
 			assertNotNull(policyController.getDetailsOfPolicy(1L));
+		}
+		
+		@Test(expected = ApplicationException.class)
+		public void testGetPolicyIfPolicyIdIsNull() throws ApplicationException {
+			policy.setId(null);
+			policy.setName("LIC Jeevan Saral");
+			assertNull(policyController.getDetailsOfPolicy(null));
 		}
 
 }

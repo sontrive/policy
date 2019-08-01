@@ -74,7 +74,12 @@ public class UserPolicyServiceImpl implements UserPolicyService {
 		} else {
 			throw new ApplicationException("Invalid policy Id");
 		}
-
+		
+		List<UserPolicyDetails> findByUserIdAndPolicyId = userPolicyDetailsRepository.findByUserIdAndPolicyId(user, policy);
+		if(null != findByUserIdAndPolicyId && !findByUserIdAndPolicyId.isEmpty()) {
+			throw new ApplicationException("You have already opted this policy.");
+		}
+		
 		Period diff = Period.between(user.getDob(), LocalDate.now());
 		if (diff.getYears() < policy.getEntryAge()) {
 			throw new ApplicationException(

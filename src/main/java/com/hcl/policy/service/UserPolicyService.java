@@ -8,4 +8,6 @@ public interface UserPolicyService {
 	
 	public ResponseDTO optForPolicy(OptPolicyDTO optPolicyDTO) throws ApplicationException;
 
+	public ResponseDTO getPolicyDetails(Long userId);
+
 }

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +35,14 @@ public class UserPolicyController {
 		validateRequest(optPolicyDTO);
 		return new ResponseEntity<>(userPolicyService.optForPolicy(optPolicyDTO), HttpStatus.OK);
 	}
+	
+	@GetMapping("/report/{userId}")
+	public ResponseEntity<Object> getPolicyDetails(@PathVariable Long userId) {
+		logger.info("Received user id for get all policy request.");
+		return new ResponseEntity<>(userPolicyService.getPolicyDetails(userId), HttpStatus.OK);
+	}
+	
+	
 	
 	private void validateRequest(OptPolicyDTO optPolicyDTO) throws ApplicationException{
 		if (null != optPolicyDTO.getPolicyId()) {

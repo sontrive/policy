@@ -25,5 +25,11 @@ public class UserPolicyServiceImpl implements UserPolicyService {
 		
 		return responseDTO;
 	}
+
+	@Override
+	public ResponseDTO getPolicyDetails(Long userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

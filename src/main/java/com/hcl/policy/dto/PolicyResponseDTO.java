@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PolicyResponseDTO {
 
-	private Long id;
+	private Long policyId;
 
-	private String name;
+	private String policyName;
 
 	private Integer entryAge;
 

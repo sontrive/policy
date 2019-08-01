@@ -10,6 +10,7 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,20 +28,21 @@ import com.hcl.policy.util.GeneratePDFReport.GeneratePdfReport;
 @RequestMapping("/policy")
 @CrossOrigin
 public class UserPolicyController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(UserPolicyController.class);
-	
+
 	private static final String ERROR_MSG = "Mandetory Element missing : ";
-	
+
 	@Autowired
 	UserPolicyService userPolicyService;
 
 	@PostMapping("")
-	public ResponseEntity<Object> optForPolicy(@RequestBody OptPolicyDTO optPolicyDTO) throws ApplicationException{
+	public ResponseEntity<Object> optForPolicy(@RequestBody OptPolicyDTO optPolicyDTO) throws ApplicationException {
 		logger.info("Received opt for policy request.");
 		validateRequest(optPolicyDTO);
 		return new ResponseEntity<>(userPolicyService.optForPolicy(optPolicyDTO), HttpStatus.OK);
 	}
+<<<<<<< HEAD
 	
 	@GetMapping(value = "/report/{userId}",produces = MediaType.APPLICATION_PDF_VALUE)
 	public ResponseEntity<Object> getPolicyDetails(@PathVariable Long userId) {
@@ -53,6 +55,10 @@ public class UserPolicyController {
 	
 	
 	private void validateRequest(OptPolicyDTO optPolicyDTO) throws ApplicationException{
+=======
+
+	private void validateRequest(OptPolicyDTO optPolicyDTO) throws ApplicationException {
+>>>>>>> e080528c67fc19ba9ae560f0ce385b199264b59e
 		if (null != optPolicyDTO.getPolicyId()) {
 			throw new ApplicationException(ERROR_MSG + "Policy Id");
 		}
@@ -62,6 +68,6 @@ public class UserPolicyController {
 		if (null != optPolicyDTO.getAcceptTermsAndConditions()) {
 			throw new ApplicationException(ERROR_MSG + "Terms And Conditions");
 		}
-		
+
 	}
 }

@@ -22,7 +22,6 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "user")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User implements Serializable {
 
 	private static final long serialVersionUID = -8671803081992677318L;
@@ -44,7 +43,7 @@ public class User implements Serializable {
 	@Column(name = "address")
 	private String address;
 	
-	@OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "userId", cascade = CascadeType.REMOVE)
 	private List<UserPolicyDetails> userPolicyDetailsList = new ArrayList<>();
 	
 }

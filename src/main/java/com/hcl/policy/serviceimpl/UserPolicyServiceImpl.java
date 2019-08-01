@@ -75,6 +75,15 @@ public class UserPolicyServiceImpl implements UserPolicyService {
 		UserPolicyDetails savedUserPolicyDetails = userPolicyDetailsRepository.save(userPolicyDetails);
 	
 		Policy savedPolicy = savedUserPolicyDetails.getPolicyId();
+		PolicyResponseDTO policyResponseDTO = createResponse(savedPolicy);
+		
+		responseDTO.setHttpStatus(HttpStatus.OK);
+		responseDTO.setMessage("You have successfully opt for policy. Find below details:");
+		responseDTO.setData(policyResponseDTO);
+		return responseDTO;
+	}
+	
+	private PolicyResponseDTO createResponse(Policy savedPolicy) {
 		PolicyResponseDTO policyResponseDTO = new PolicyResponseDTO();
 		policyResponseDTO.setEntryAge(savedPolicy.getEntryAge());
 		policyResponseDTO.setMaxMaturityAge(savedPolicy.getMaxMaturityAge());
@@ -83,11 +92,7 @@ public class UserPolicyServiceImpl implements UserPolicyService {
 		policyResponseDTO.setPolicyName(savedPolicy.getName());
 		policyResponseDTO.setPolicyId(savedPolicy.getId());
 		policyResponseDTO.setPolicyTerm(savedPolicy.getPolicyTerm());
-		
-		responseDTO.setHttpStatus(HttpStatus.OK);
-		responseDTO.setMessage("You have successfully opt for policy. Find below details:");
-		responseDTO.setData(policyResponseDTO);
-		return responseDTO;
+		 return policyResponseDTO;
 	}
 
 }

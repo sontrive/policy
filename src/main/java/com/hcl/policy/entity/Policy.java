@@ -59,8 +59,8 @@ public class Policy implements Serializable {
 	@Column(name = "loan_facility")
 	private String loanFacility;
 	
-	@Column(name = "policy_ecription")
-	private String policyDecription;
+	@Column(name = "policy_description")
+	private String policyDescription;
 	
 	@Column(name = "status")
 	private String status;

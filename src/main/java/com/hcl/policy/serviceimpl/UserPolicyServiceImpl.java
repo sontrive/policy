@@ -35,11 +35,10 @@ import lombok.var;
 public class UserPolicyServiceImpl implements UserPolicyService {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserPolicyController.class);
-	
+
 	@Autowired
 	PolicyRepository policyRepository;
 
-	
 	@Autowired
 	UserRepository userRepository;
 
@@ -73,18 +72,19 @@ public class UserPolicyServiceImpl implements UserPolicyService {
 		} else {
 			throw new ApplicationException("Invalid policy Id");
 		}
-		
-		List<UserPolicyDetails> findByUserIdAndPolicyId = userPolicyDetailsRepository.findByUserIdAndPolicyId(user, policy);
-		if(null != findByUserIdAndPolicyId && !findByUserIdAndPolicyId.isEmpty()) {
+
+		List<UserPolicyDetails> findByUserIdAndPolicyId = userPolicyDetailsRepository.findByUserIdAndPolicyId(user,
+				policy);
+		if (null != findByUserIdAndPolicyId && !findByUserIdAndPolicyId.isEmpty()) {
 			throw new ApplicationException("You have already opted this policy.");
 		}
-		
+
 		Period diff = Period.between(user.getDob(), LocalDate.now());
 		if (diff.getYears() < policy.getEntryAge()) {
 			throw new ApplicationException(
 					USER_NOT_ELIGIBLE_ERR_MSG + "Age should be greater than " + policy.getEntryAge());
 		}
-		
+
 		if (diff.getYears() < 18) {
 			throw new ApplicationException("If user age is less than 18 then atleast one Nominee should be present.");
 		}
@@ -95,10 +95,10 @@ public class UserPolicyServiceImpl implements UserPolicyService {
 		userPolicyDetails.setUserId(user);
 		userPolicyDetails.setStatus(1);
 		UserPolicyDetails savedUserPolicyDetails = userPolicyDetailsRepository.save(userPolicyDetails);
-	
+
 		Policy savedPolicy = savedUserPolicyDetails.getPolicyId();
 		PolicyResponseDTO policyResponseDTO = createResponse(savedPolicy);
-		
+
 		responseDTO.setHttpStatus(HttpStatus.OK);
 		responseDTO.setMessage("You have successfully opt for policy. Find below details:");
 		responseDTO.setData(policyResponseDTO);
@@ -108,30 +108,27 @@ public class UserPolicyServiceImpl implements UserPolicyService {
 
 	@Override
 	public InputStreamResource getPolicyDetails(Long userId) throws ApplicationException {
-		
+
 		Optional<User> optionalUser = userRepository.findById((userId));
 		User user;
 
 		if (optionalUser.isPresent()) {
 			user = optionalUser.get();
 			List<UserPolicyDetails> result = userPolicyDetailsRepository.findByUserId(user);
-			
 
-	        ByteArrayInputStream bis = GeneratePdfReport.policyReport(result);
+			ByteArrayInputStream bis = GeneratePdfReport.policyReport(result);
 
-	        var headers = new HttpHeaders();
-	        headers.add("Content-Disposition", "inline; filename=PolicyReport.pdf");
+			var headers = new HttpHeaders();
+			headers.add("Content-Disposition", "inline; filename=PolicyReport.pdf");
 
-	        return new InputStreamResource(bis);
-			
+			return new InputStreamResource(bis);
+
 		} else {
 			throw new ApplicationException("Invalid User Id");
 		}
 
-				
-		    
 	}
-	
+
 	private PolicyResponseDTO createResponse(Policy savedPolicy) {
 		PolicyResponseDTO policyResponseDTO = new PolicyResponseDTO();
 		policyResponseDTO.setEntryAge(savedPolicy.getEntryAge());
@@ -141,7 +138,7 @@ public class UserPolicyServiceImpl implements UserPolicyService {
 		policyResponseDTO.setPolicyName(savedPolicy.getName());
 		policyResponseDTO.setPolicyId(savedPolicy.getId());
 		policyResponseDTO.setPolicyTerm(savedPolicy.getPolicyTerm());
-		 return policyResponseDTO;
+		return policyResponseDTO;
 	}
 
 }

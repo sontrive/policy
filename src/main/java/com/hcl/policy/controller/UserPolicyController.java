@@ -45,8 +45,6 @@ public class UserPolicyController {
 	public ResponseEntity<Object> getPolicyDetails(@PathVariable Long userId) throws ApplicationException {
 		logger.info("Received user id for get all policy request.");
 		InputStreamResource policyDetails = userPolicyService.getPolicyDetails(userId);
-		System.out.println(policyDetails);
-		//return new ResponseEntity<>("Pdf Generated Successfully", HttpStatus.OK);
 		 var headers = new HttpHeaders();
 	        headers.add("Content-Disposition", "attachment; filename=Policies Report.pdf");
 

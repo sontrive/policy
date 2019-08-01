@@ -46,9 +46,6 @@ public class Policy implements Serializable {
 	@Column(name = "min_sum_assured")
 	private Double minSumAssured;
 	
-	@Column(name = "status")
-	private String status;
-	
 	@Column(name = "mode_of_payment")
 	private String modeOfPayment;
 	
@@ -60,6 +57,9 @@ public class Policy implements Serializable {
 	
 	@Column(name = "policy_ecription")
 	private String policyDecription;
+	
+	@Column(name = "status")
+	private String status;
 	
 	@Column(name = "terms_and_conditions")
 	private String termsAndConditions;

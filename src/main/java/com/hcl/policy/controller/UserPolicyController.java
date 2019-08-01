@@ -3,6 +3,8 @@ package com.hcl.policy.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hcl.policy.dto.OptPolicyDTO;
 import com.hcl.policy.exception.ApplicationException;
 import com.hcl.policy.service.UserPolicyService;
+
+import lombok.var;
 
 @RestController
 @RequestMapping("/policy")
@@ -37,10 +41,20 @@ public class UserPolicyController {
 		return new ResponseEntity<>(userPolicyService.optForPolicy(optPolicyDTO), HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/report/{userId}", produces = MediaType.APPLICATION_PDF_VALUE)
-	public ResponseEntity<Object> getPolicyDetails(@PathVariable Long userId) {
+	@GetMapping(value = "/report/{userId}",produces = MediaType.APPLICATION_PDF_VALUE)
+	public ResponseEntity<Object> getPolicyDetails(@PathVariable Long userId) throws ApplicationException {
 		logger.info("Received user id for get all policy request.");
-		return new ResponseEntity<>(userPolicyService.getPolicyDetails(userId), HttpStatus.OK);
+		InputStreamResource policyDetails = userPolicyService.getPolicyDetails(userId);
+		System.out.println(policyDetails);
+		//return new ResponseEntity<>("Pdf Generated Successfully", HttpStatus.OK);
+		 var headers = new HttpHeaders();
+	        headers.add("Content-Disposition", "attachment; filename=Policies Report.pdf");
+
+	        return ResponseEntity
+	                .ok()
+	                .headers(headers)
+	                .contentType(MediaType.APPLICATION_PDF)
+	                .body(policyDetails);
 	}
 
 	private void validateRequest(OptPolicyDTO optPolicyDTO) throws ApplicationException {

@@ -1,14 +1,13 @@
 package com.hcl.policy.util;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
-import com.hcl.policy.entity.Policy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.hcl.policy.entity.UserPolicyDetails;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -35,7 +34,7 @@ public class GeneratePDFReport {
 	            PdfPTable table = new PdfPTable(6);
 	            table.setWidthPercentage(60);
 	            //doubtfull hai
-	            table.setWidths(new int[]{1, 6, 6});
+	            table.setWidths(new int[]{3, 3, 3, 3, 3, 3});
 
 	            Font headFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
 

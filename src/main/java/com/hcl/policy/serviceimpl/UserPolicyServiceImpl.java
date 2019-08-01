@@ -1,11 +1,9 @@
 package com.hcl.policy.serviceimpl;
 
 import java.io.ByteArrayInputStream;
-import java.util.List;
-
 import java.time.LocalDate;
 import java.time.Period;
-
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.lang.BooleanUtils;
@@ -14,11 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-
 import org.springframework.http.HttpStatus;
-
 import org.springframework.stereotype.Service;
 
 import com.hcl.policy.controller.UserPolicyController;
@@ -113,25 +107,28 @@ public class UserPolicyServiceImpl implements UserPolicyService {
 	}
 
 	@Override
-	public ResponseEntity<InputStreamResource> getPolicyDetails(Long userId) {
-		User optionalUser = userRepository.findById(userId).get();
-		System.out.println(optionalUser);
-		List<UserPolicyDetails> result = userPolicyDetailsRepository.findByUserId(optionalUser);
+	public InputStreamResource getPolicyDetails(Long userId) throws ApplicationException {
 		
-			System.out.println("::::::::::::::::::");
-			System.out.println("-->" + result);
-		        
+		Optional<User> optionalUser = userRepository.findById((userId));
+		User user;
 
-		        ByteArrayInputStream bis = GeneratePdfReport.policyReport(result);
+		if (optionalUser.isPresent()) {
+			user = optionalUser.get();
+			List<UserPolicyDetails> result = userPolicyDetailsRepository.findByUserId(user);
+			
 
-		        var headers = new HttpHeaders();
-		        headers.add("Content-Disposition", "inline; filename=PolicyReport.pdf");
+	        ByteArrayInputStream bis = GeneratePdfReport.policyReport(result);
 
-		        return ResponseEntity
-		                .ok()
-		                .headers(headers)
-		                .contentType(MediaType.APPLICATION_PDF)
-		                .body(new InputStreamResource(bis));
+	        var headers = new HttpHeaders();
+	        headers.add("Content-Disposition", "inline; filename=PolicyReport.pdf");
+
+	        return new InputStreamResource(bis);
+			
+		} else {
+			throw new ApplicationException("Invalid User Id");
+		}
+
+				
 		    
 	}
 	

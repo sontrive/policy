@@ -1,5 +1,6 @@
 package com.hcl.policy.entity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
@@ -20,7 +21,7 @@ import lombok.Data;
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Table(name = "user_policy_details")
-public class UserPolicyDetails {
+public class UserPolicyDetails implements Serializable{
 
 	private static final long serialVersionUID = -8671803081992677318L;
 

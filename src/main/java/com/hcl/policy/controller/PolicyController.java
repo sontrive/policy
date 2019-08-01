@@ -12,7 +12,6 @@ import com.hcl.policy.service.PolicyService;
 @CrossOrigin
 @RestController
 public class PolicyController {
-
 	
 	@Autowired
 	PolicyService policyService;

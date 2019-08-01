@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 
 import com.hcl.policy.dto.PolicyResponseDTO;
 import com.hcl.policy.dto.ResponseDTO;
@@ -14,7 +15,7 @@ import com.hcl.policy.entity.Policy;
 import com.hcl.policy.repository.PolicyRepository;
 import com.hcl.policy.service.PolicyService;
 
-
+@Service
 public class PolicyServiceImpl implements PolicyService {
 	
 	

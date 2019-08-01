@@ -11,7 +11,7 @@ public class PolicyResponseDTO {
 
 	private Long policyId;
 
-	private String name;
+	private String policyName;
 
 	private Integer entryAge;
 

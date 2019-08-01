@@ -73,9 +73,16 @@ public class UserPolicyServiceImpl implements UserPolicyService {
 		userPolicyDetails.setUserId(user);
 		userPolicyDetails.setStatus(1);
 		UserPolicyDetails savedUserPolicyDetails = userPolicyDetailsRepository.save(userPolicyDetails);
-		
+	
+		Policy savedPolicy = savedUserPolicyDetails.getPolicyId();
 		PolicyResponseDTO policyResponseDTO = new PolicyResponseDTO();
-		policyResponseDTO.setEntryAge(savedUserPolicyDetails.getPolicyId().getEntryAge());
+		policyResponseDTO.setEntryAge(savedPolicy.getEntryAge());
+		policyResponseDTO.setMaxMaturityAge(savedPolicy.getMaxMaturityAge());
+		policyResponseDTO.setMinPremium(savedPolicy.getMinPremium());
+		policyResponseDTO.setMinSumAssured(savedPolicy.getMinPremium());
+		policyResponseDTO.setPolicyName(savedPolicy.getName());
+		policyResponseDTO.setPolicyId(savedPolicy.getId());
+		policyResponseDTO.setPolicyTerm(savedPolicy.getPolicyTerm());
 		
 		responseDTO.setHttpStatus(HttpStatus.OK);
 		responseDTO.setMessage("You have successfully opt for policy. Find below details:");

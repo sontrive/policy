@@ -10,7 +10,6 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,13 +55,13 @@ public class UserPolicyController {
 	
 	
 	private void validateRequest(OptPolicyDTO optPolicyDTO) throws ApplicationException {
-		if (null != optPolicyDTO.getPolicyId()) {
+		if (null == optPolicyDTO.getPolicyId()) {
 			throw new ApplicationException(ERROR_MSG + "Policy Id");
 		}
-		if (null != optPolicyDTO.getUserId()) {
+		if (null == optPolicyDTO.getUserId()) {
 			throw new ApplicationException(ERROR_MSG + "User Id");
 		}
-		if (null != optPolicyDTO.getAcceptTermsAndConditions()) {
+		if (null == optPolicyDTO.getAcceptTermsAndConditions()) {
 			throw new ApplicationException(ERROR_MSG + "Terms And Conditions");
 		}
 

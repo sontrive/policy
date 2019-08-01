@@ -47,14 +47,14 @@ public class UserPolicyServiceImpl implements UserPolicyService {
 	@Autowired
 	UserPolicyDetailsRepository userPolicyDetailsRepository;
 
-	private static final String USER_NOT_ELIGIBLE_ERR_MSG = "User not eligible for policy";
+	private static final String USER_NOT_ELIGIBLE_ERR_MSG = "User is not eligible for policy. ";
 
 	@Override
 	public ResponseDTO optForPolicy(OptPolicyDTO optPolicyDTO) throws ApplicationException {
 		ResponseDTO responseDTO = new ResponseDTO();
 
 		if (BooleanUtils.isFalse(optPolicyDTO.getAcceptTermsAndConditions())) {
-			throw new ApplicationException("To opt for policy user should accept the terms.");
+			throw new ApplicationException("To opt for policy user should accept the terms and conditions.");
 		}
 
 		Optional<User> optionalUser = userRepository.findById(optPolicyDTO.getUserId());

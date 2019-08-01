@@ -34,7 +34,7 @@ public class GeneratePDFReport {
 
 			PdfPTable table = new PdfPTable(6);
 			table.setWidthPercentage(60);
-			table.setWidths(new int[] { 3, 3, 3, 3, 3, 3 });
+			table.setWidths(new int[] { 3, 3, 3, 3, 3, 3});
 
 			Font headFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
 
@@ -63,12 +63,14 @@ public class GeneratePDFReport {
 			hcell = new PdfPCell(new Phrase("Sum Assured", headFont));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			table.addCell(hcell);
+			
+			
 
 			for (UserPolicyDetails policy : policies) {
 
 				PdfPCell cell;
 
-				cell = new PdfPCell(new Phrase(policy.getId().toString()));
+				cell = new PdfPCell(new Phrase(policy.getPolicyId().getId().toString()));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				table.addCell(cell);
@@ -101,6 +103,8 @@ public class GeneratePDFReport {
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(5);
 				table.addCell(cell);
+				
+				
 
 			}
 

@@ -55,6 +55,7 @@ public class PolicyServiceImplTest {
 		user = createUser();
 		optionalUser = Optional.of(user);
 		policy = createPolicy();
+		policy.setId(1L);
 		optionalPolicy = Optional.of(policy);
 	}
 
@@ -120,6 +121,7 @@ public class PolicyServiceImplTest {
 		policy.setId(1L);
 		policy.setName("LIC Anand");
 		policy.setPolicyDescription("LIC Jeevan Anand");
+		policyList.add(policy);
 		when(policyRepositoryMock.findAll()).thenReturn(policyList);
 		assertNotNull(policyServiceImpl.getAllPolicies());
 	}
@@ -129,6 +131,7 @@ public class PolicyServiceImplTest {
 		Policy policy = new Policy();
 		policy.setId(1L);
 		Mockito.when(policyRepositoryMock.findById(Mockito.anyLong())).thenReturn(optionalPolicy);
+		when(policyRepositoryMock.getPolicyDetails(1L)).thenReturn(policy);
 		assertNotNull(policyServiceImpl.getPolicyDetails(1L));
 	}
 

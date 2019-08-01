@@ -35,6 +35,6 @@ public class TrendAnalysisController {
 			throw new ApplicationException("Please enter analysis criteria");
 		}
 		responseDTO = trendAnalysisService.getPolicyTrendAnalysis(criteria);
-		return new ResponseEntity<Object>(responseDTO, HttpStatus.CREATED);
+		return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
 	}
 }

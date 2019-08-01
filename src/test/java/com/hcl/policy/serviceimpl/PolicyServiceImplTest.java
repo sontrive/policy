@@ -14,7 +14,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import com.hcl.policy.dto.OptPolicyDTO;
-import com.hcl.policy.dto.ResponseDTO;
 import com.hcl.policy.entity.Policy;
 import com.hcl.policy.entity.User;
 import com.hcl.policy.entity.UserPolicyDetails;

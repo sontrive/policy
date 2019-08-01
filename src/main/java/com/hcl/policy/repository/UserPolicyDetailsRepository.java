@@ -10,6 +10,10 @@ import com.hcl.policy.entity.Policy;
 import com.hcl.policy.entity.User;
 import com.hcl.policy.entity.UserPolicyDetails;
 
+/**
+ * @author Administrator
+ *
+ */
 @Repository
 public interface UserPolicyDetailsRepository extends JpaRepository<UserPolicyDetails, Long> {
 

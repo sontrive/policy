@@ -20,8 +20,6 @@ import com.hcl.policy.dto.OptPolicyDTO;
 import com.hcl.policy.exception.ApplicationException;
 import com.hcl.policy.service.UserPolicyService;
 
-import lombok.var;
-
 @RestController
 @RequestMapping("/policy")
 @CrossOrigin
@@ -41,18 +39,14 @@ public class UserPolicyController {
 		return new ResponseEntity<>(userPolicyService.optForPolicy(optPolicyDTO), HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/report/{userId}",produces = MediaType.APPLICATION_PDF_VALUE)
+	@GetMapping(value = "/report/{userId}", produces = MediaType.APPLICATION_PDF_VALUE)
 	public ResponseEntity<Object> getPolicyDetails(@PathVariable Long userId) throws ApplicationException {
 		logger.info("Received user id for get all policy request.");
 		InputStreamResource policyDetails = userPolicyService.getPolicyDetails(userId);
-		 var headers = new HttpHeaders();
-	        headers.add("Content-Disposition", "attachment; filename=Policies Report.pdf");
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Disposition", "attachment; filename=Policies Report.pdf");
 
-	        return ResponseEntity
-	                .ok()
-	                .headers(headers)
-	                .contentType(MediaType.APPLICATION_PDF)
-	                .body(policyDetails);
+		return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(policyDetails);
 	}
 
 	private void validateRequest(OptPolicyDTO optPolicyDTO) throws ApplicationException {

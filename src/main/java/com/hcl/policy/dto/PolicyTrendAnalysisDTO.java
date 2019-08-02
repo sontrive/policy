@@ -1,5 +1,7 @@
 package com.hcl.policy.dto;
 
+import com.hcl.policy.entity.Policy;
+
 import lombok.Data;
 
 /**
@@ -9,7 +11,7 @@ import lombok.Data;
 @Data
 public class PolicyTrendAnalysisDTO {
 
-	private Long policyId;
+	private Policy policyId;
 	
 	private Long policyOptedCount;
 	

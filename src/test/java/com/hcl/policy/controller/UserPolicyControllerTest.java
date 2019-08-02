@@ -17,23 +17,42 @@ import com.hcl.policy.service.UserPolicyService;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserPolicyControllerTest {
-	
+
 	@InjectMocks
 	UserPolicyController userPolicyController;
-	
+
 	@Mock
 	UserPolicyService userPolicyServiceMock;
-	
+
 	OptPolicyDTO optPolicyDTO;
+
 	@Before
 	public void setUp() {
 		optPolicyDTO = createOptPolicyDTO();
 	}
-	
+
 	@Test
 	public void testOptForPolicy() throws ApplicationException {
-		
+
 		Mockito.when(userPolicyServiceMock.optForPolicy(optPolicyDTO)).thenReturn(new ResponseDTO());
+		assertNotNull(userPolicyController.optForPolicy(optPolicyDTO));
+	}
+
+	@Test(expected = ApplicationException.class)
+	public void testOptForPolicyTncMissing() throws ApplicationException {
+		optPolicyDTO.setAcceptTermsAndConditions(null);
+		assertNotNull(userPolicyController.optForPolicy(optPolicyDTO));
+	}
+
+	@Test(expected = ApplicationException.class)
+	public void testOptForPolicyPolicyIDMissing() throws ApplicationException {
+		optPolicyDTO.setPolicyId(null);
+		assertNotNull(userPolicyController.optForPolicy(optPolicyDTO));
+	}
+
+	@Test(expected = ApplicationException.class)
+	public void testOptForPolicyUserIDMissing() throws ApplicationException {
+		optPolicyDTO.setUserId(null);
 		assertNotNull(userPolicyController.optForPolicy(optPolicyDTO));
 	}
 

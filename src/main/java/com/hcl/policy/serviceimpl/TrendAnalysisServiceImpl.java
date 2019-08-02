@@ -13,6 +13,7 @@ import com.hcl.policy.controller.PolicyController;
 import com.hcl.policy.dto.PolicyTrendAnalysisDTO;
 import com.hcl.policy.dto.ResponseDTO;
 import com.hcl.policy.exception.ApplicationException;
+import com.hcl.policy.repository.PolicyRepository;
 import com.hcl.policy.repository.UserPolicyDetailsRepository;
 import com.hcl.policy.service.TrendAnalysisService;
 
@@ -27,6 +28,9 @@ public class TrendAnalysisServiceImpl implements TrendAnalysisService {
 
 	@Autowired
 	UserPolicyDetailsRepository userPolicyDetailsRepository;
+	
+	@Autowired
+	PolicyRepository policyRepository;
 
 	/**
 	 * @param criteria
@@ -62,8 +66,9 @@ public class TrendAnalysisServiceImpl implements TrendAnalysisService {
 			}
 			if (0 < totalPoliciesOpted) {
 				for (List<?> policyTrendAnalysis : policiesTrendList) {
+					Long policyId = Long.parseLong(String.valueOf(policyTrendAnalysis.get(0)));
 					PolicyTrendAnalysisDTO policyTrendAnalysisDTO = new PolicyTrendAnalysisDTO();
-					policyTrendAnalysisDTO.setPolicyId(Long.parseLong(String.valueOf(policyTrendAnalysis.get(0))));
+					policyTrendAnalysisDTO.setPolicyId(policyRepository.getPolicyDetails(policyId));
 					policyTrendAnalysisDTO.setPolicyOptedCount(Long.parseLong(String.valueOf(policyTrendAnalysis.get(1))));
 					policyTrendAnalysisDTO.setTrendPercent(
 							(float) (Integer.parseInt(String.valueOf(policyTrendAnalysis.get(1)))) / (totalPoliciesOpted) * 100);
@@ -90,7 +95,7 @@ public class TrendAnalysisServiceImpl implements TrendAnalysisService {
 		if(!unoptedPolicyList.isEmpty()) {
 			for(Long policyId : unoptedPolicyList) {
 				PolicyTrendAnalysisDTO policyTrendAnalysisDTO = new PolicyTrendAnalysisDTO();
-				policyTrendAnalysisDTO.setPolicyId(policyId);
+				policyTrendAnalysisDTO.setPolicyId(policyRepository.getPolicyDetails(policyId));
 				policyTrendAnalysisDTO.setPolicyOptedCount(0L);
 				policyTrendAnalysisDTO.setTrendPercent(0.0f);
 				policiesTrendOutputList.add(policyTrendAnalysisDTO);

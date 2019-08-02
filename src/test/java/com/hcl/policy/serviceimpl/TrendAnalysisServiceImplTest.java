@@ -16,6 +16,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import com.hcl.policy.dto.PolicyTrendAnalysisDTO;
 import com.hcl.policy.exception.ApplicationException;
+import com.hcl.policy.repository.PolicyRepository;
 import com.hcl.policy.repository.UserPolicyDetailsRepository;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -26,6 +27,9 @@ public class TrendAnalysisServiceImplTest {
 
 	@Mock
 	UserPolicyDetailsRepository userPolicyDetailsRepository;
+	
+	@Mock
+	PolicyRepository policyRepository;
 
 	Integer analysisDuration = 0;
 	List<PolicyTrendAnalysisDTO> policiesTrendOutputList;

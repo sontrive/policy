@@ -8,11 +8,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.hcl.policy.entity.UserPolicyDetails;
+import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -29,10 +31,18 @@ public class GeneratePDFReport {
 
 		try {
 
+			
+			
 			PdfPTable table = new PdfPTable(7);
 			table.setWidthPercentage(100);
 			table.setWidths(new int[] { 3, 3, 3, 3, 3, 3, 3});
-
+			Paragraph header = new Paragraph(new Chunk("Welcome to Super Insurance",FontFactory.getFont(FontFactory.HELVETICA, 15)));
+			Paragraph headerSpace = new Paragraph(new Chunk("                                                 ",FontFactory.getFont(FontFactory.HELVETICA, 15)));
+			
+			//Paragraph by = new Paragraph(new Chunk("Author " + employee.getFirstName() + " " + employee.getLastName(),FontFactory.getFont(FontFactory.HELVETICA, 20)));
+			  
+			
+			
 			Font headFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
 
 			PdfPCell hcell;
@@ -111,11 +121,12 @@ public class GeneratePDFReport {
 				table.addCell(cell);
 
 			}
-
+			
 			PdfWriter.getInstance(document, out);
 			document.open();
+			document.add(header);
+			document.add(headerSpace);
 			document.add(table);
-
 			document.close();
 
 		} catch (DocumentException ex) {

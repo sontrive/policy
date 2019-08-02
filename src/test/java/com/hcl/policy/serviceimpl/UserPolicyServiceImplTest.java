@@ -33,10 +33,10 @@ public class UserPolicyServiceImplTest {
 
 	@Mock
 	UserRepository userRepositoryMock;
-	
+
 	@Mock
 	UserPolicyDetailsRepository userPolicyDetailsRepositoryMock;
-	
+
 	OptPolicyDTO optPolicyDTO;
 	User user;
 	Policy policy;
@@ -57,12 +57,22 @@ public class UserPolicyServiceImplTest {
 	public void testOptForPolicy() throws ApplicationException {
 		Mockito.when(userRepositoryMock.findById(Mockito.anyLong())).thenReturn(optionalUser);
 		Mockito.when(policyRepositoryMock.findById(Mockito.anyLong())).thenReturn(optionalPolicy);
-		UserPolicyDetails userPolicyDetails = createUserPolicyDetails() ;
-		Mockito.when(userPolicyDetailsRepositoryMock.save(Mockito.any(UserPolicyDetails.class))).thenReturn(userPolicyDetails);
-		
+		UserPolicyDetails userPolicyDetails = createUserPolicyDetails();
+		Mockito.when(userPolicyDetailsRepositoryMock.save(Mockito.any(UserPolicyDetails.class)))
+				.thenReturn(userPolicyDetails);
+
 		assertNotNull(userPolicyServiceImpl.optForPolicy(optPolicyDTO));
 
 	}
+
+	@Test(expected = ApplicationException.class)
+	public void testOptForPolicyFalseTnc() throws ApplicationException {
+		optPolicyDTO.setAcceptTermsAndConditions(Boolean.FALSE);
+		assertNotNull(userPolicyServiceImpl.optForPolicy(optPolicyDTO));
+
+	}
+	
+	
 
 	private OptPolicyDTO createOptPolicyDTO() {
 		OptPolicyDTO optPolicyDTO = new OptPolicyDTO();
@@ -80,7 +90,7 @@ public class UserPolicyServiceImplTest {
 		user.setName("shiv");
 		return user;
 	}
-	
+
 	private Policy createPolicy() {
 		Policy policy = new Policy();
 		policy.setEntryAge(22);
@@ -97,7 +107,7 @@ public class UserPolicyServiceImplTest {
 		policy.setTermsAndConditions("termsAndConditions");
 		return policy;
 	}
-	
+
 	private UserPolicyDetails createUserPolicyDetails() {
 		UserPolicyDetails userPolicyDetails = new UserPolicyDetails();
 		userPolicyDetails.setId(1L);
@@ -107,5 +117,5 @@ public class UserPolicyServiceImplTest {
 		userPolicyDetails.setStatus(1);
 		return userPolicyDetails;
 	}
-	
+
 }
